@@ -12,5 +12,5 @@ Some extra stuff for more dynamic content loading are also provided
  * NavICON: icon based navigation menu
  * LocalLink: load new content into the current module
  * AjaxForm: update current module with results from a FORM POST
- * TabLink: simple go to another tab
+ * TabLink: simply go to another tab
  * ThickBox: a refined verson of ThickBox is integrated to support portal environment
