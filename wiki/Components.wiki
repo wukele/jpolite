@@ -1,4 +1,4 @@
-# Main components in a portal.
+#summary Main components in a portal
 
 = Tabs =
 The tabs are defined in index.html "header_tabs" section with id "t1", "t2", "t3" ... respectively
