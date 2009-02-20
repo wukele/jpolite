@@ -14,9 +14,9 @@ Download a full-featured demo package in the Downloads section or here at [http:
 Thus, comments and critics are more than welcome to make this framework more useful to more developers.
 
 = System Requirements =
- * JQuery - Tested with version 1.3.1
+ * jQuery - Tested with version 1.3.1
  * Browser - Tested with IE8 (beta), IE7, Firefox 3.0.6, Google Chrome 1.0.154.48, Safari 3.2.2 under Windows XP SP3 for now.
 
 = Credits =
  * [http://netvibes.com Nevibes] the personalized web portal - the Inspiration.
- * [http://jquery.com JQuery] the write less do more JS library - the Enablement.
+ * [http://jquery.com jQuery] the write less do more JS library - the Enablement.
