@@ -1,7 +1,7 @@
 #summary UI navigation controls provided with the portal
 
 = Introduction =
-Some quick and simple navigation controls are provided in the portal. More sophisticated UI elements can be found at [http://jqueryui.com/ jQueryUI]
+Some quick and simple navigation controls are provided in the portal. More sophisticated UI elements can be found at [http://jqueryui.com/ jQuery UI]
 Some extra stuff for more dynamic content loading are also provided
 
 
