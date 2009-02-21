@@ -27,8 +27,10 @@ jQuery.fn.rm = function() {
 // For DIV.module to load content
 jQuery.fn.loadContent = function(url) {
 	return this.each(function() {
-		var x = $(".moduleContent", this);
-		x.load(url || this.url, prepModule);
+		u = (url || this.url);
+		if (u == '') return;
+		x = $(".moduleContent", this);
+		x.load(u, prepModule);
 		this.loaded = true;
 	});
 };
@@ -246,7 +248,7 @@ $(function(){
 	c1 = $("#c1");
 	c2 = $("#c2");
 	c3 = $("#c3");
-	helper = $("#helper")
+	helper = $("#helper");
 
 	$("#header_tabs li").each(function(){
 		// During initialization, attach a "modules" array to each tab
@@ -358,4 +360,3 @@ jQuery.fn.AjaxForm2 = function() {
 		})
 	});
 };
-
