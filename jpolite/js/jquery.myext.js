@@ -133,18 +133,38 @@ function ReplaceModule() {
 				color:eval("_modules."+i+".c")||null});
 };
 
+//RSS Side Menu (Text Link)
+jQuery.fn.RSSLi = function()  {
+	$("a", this).click(LoadRSSModule);
+	return this.addClass("rssli");
+};
+
+// When a RSSLi item is clicked, close all modules in column2 (c2)
+// and add a new module with dynamic RSS content
+function LoadRSSModule() {
+	x = $(".module:visible",c2);
+	$(".action_close",x).mousedown();
+	c2.addModule({id:'m000',			//Module ID doesn't matter now
+				title:$(this).text(),	//Link text as module title
+				url:'rss.php?q='+encodeURIComponent(this.href)});	//Original link turn into proxy query
+	return false;
+};
+
 // Process the content of a newly loaded module before showing
 function prepModule() {
-	$(".tabs", this).Tabs();
-	$(".accordion", this).Accordion();
-	$(".maccordion", this).MAccordion();
+	$(".tabs",this).Tabs();
+	$(".accordion",this).Accordion();
+	$(".maccordion",this).MAccordion();
 	$(".navicon > img",this).NavIcon();
-	$(".navul > li", this).NavLi();
+	$(".navul > li",this).NavLi();
+	$(".rssul > li",this).RSSLi();
 	$("a.local",this).LocalLink();
 	$("a.tab",this).TabLink();
-	$("form.ajaxform1").AjaxForm1();
-	$("form.ajaxform2").AjaxForm2();
-	$('.thickbox').click(TB);
+	$("form.ajaxform1",this).AjaxForm1();
+	$("form.ajaxform2",this).AjaxForm2();
+	$(".thickbox",this).click(TB);
+	$("a[href^=http]",this).attr("target","_blank");
+	
 	$(this).slideDown();
 };
 

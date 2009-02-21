@@ -81,6 +81,10 @@ ul.bullet {list-style-type:square; padding-left:20px; margin:5px 0}
 .navli {cursor:pointer; padding-left:28px; height:24px; line-height:24px; background:url(icon/link.gif) 0 0 no-repeat}
 .navli:hover {background-image:url(icon/link1.gif); font-weight:bold}
 
+/* For RSSLi */
+.rssli a {display:block; height:24px; line-height:24px; padding-left:28px; background:url(icon/rss.gif) 0 0 no-repeat}
+.rssli a:hover {background-image:url(icon/rss1.gif); font-weight:bold}
+
 /* Tabs Control */
 .tabs {border:1px solid #ccc}
 .tabsul {overflow:hidden;;padding-top:1px;background:#ccc}
