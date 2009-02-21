@@ -29,6 +29,10 @@ var _modules={
 	m503:{l:"m503.html",	t:"Tab Link (m503)"},
 	m504:{l:"m504.html",	t:"Thick Box (m504)"},
 
+	m700:{l:"m700.html",	t:"RSSLi Menu (m700)"},
+	m701:{l:"m701.html",	t:"RSS Reader (m701)"},
+	m702:{l:"rss.php?q=http%3A%2F%2Frss.msnbc.msn.com%2Fid%2F3032091%2Fdevice%2Frss%2Frss.xml",	t:"MSNBC - Static RSS Module (m702)"},
+
 	m601:{l:"m601.html",	t:"Resources & Credit"},
 	m602:{l:"m602.html",	t:"License"}
 };
@@ -50,6 +54,9 @@ var _layout=[
 
 	{i:'m500',c:'c1',t:'t5'},{i:'m501',c:'c2',t:'t5'},
 
+	{i:'m700',c:'c1',t:'t7'},{i:'m701',c:'c2',t:'t7'},
+							 {i:'m702',c:'c2',t:'t7'},
+
 	{i:'m601',c:'c1',t:'t6'},
 	{i:'m602',c:'c1',t:'t6'}
 ];
@@ -64,5 +71,6 @@ var _tabs={
 	t3:{c1:"50%",c2:"50%",c3:"100%",helper:true},
 	t4:{c1:"270px",c2:"auto",c3:0,helper:true},
 	t5:{c1:"270px",c2:"auto",c3:0,helper:true},
-	t6:{c1:"100%",c2:0,c3:0}
+	t6:{c1:"100%",c2:0,c3:0},
+	t7:{c1:"270px",c2:"auto",c3:0}
 };
