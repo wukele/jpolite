@@ -166,7 +166,8 @@ function prepModule() {
 	$("form.ajaxform2",this).AjaxForm2();
 	$(".thickbox",this).click(TB);
 	$("a[href^=http]",this).attr("target","_blank");
-	
+	$("a[rel=new]",this).attr("target","_blank");
+
 	$(this).slideDown();
 };
 
@@ -212,6 +213,8 @@ jQuery.fn.addModule = function(settings) { //id, title, url, tab, class
 // Actions taken when you click a header tab
 function HeaderTabClick(){
 	if (this === ct) return;	//Return if click on current active tab
+
+	location.hash = '#' + this.id;
 	$(this).siblings(".on").andSelf().toggleClass("on");
 
 	//Hide last tab's modules
@@ -223,7 +226,7 @@ function HeaderTabClick(){
 	// Load an extra helper content block if defined
 	// with a file name default to current tab's id
 	helper.hide();
-	if (x.helper) helper.load(this.id+".html").show();
+	if (x.helper) helper.load(this.id+".html", prepModule).show();
 	else helper.hide().empty();
 
 	//Ajust column widths
@@ -264,8 +267,15 @@ $(function(){
 	$(".action_min").mousedown(minModule);
 	$(".action_max").mousedown(maxModule);
 	$(".action_close").mousedown(closeModule);
+	//Make all external links open in new window
+	$("a[href^=http]").attr("target","_blank");
+	//Make all links with rel=new attribute to open in new window
+	$("a[rel=new]").attr("target","_blank");
 
-	setTimeout("$('#header_tabs li:first').click()", 200);
+	t = location.hash;
+	if ((t == '') || ($(t).size() != 1)) t = ":first";
+
+	setTimeout("$('#header_tabs li"+t+"').click()", 200);
 });
 
 // Container Actions, apply on modules
