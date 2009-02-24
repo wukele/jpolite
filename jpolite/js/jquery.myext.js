@@ -258,6 +258,14 @@ $(function(){
 		this.modules = [];
 		$(this).click(HeaderTabClick);
 	});
+
+	$(".main_containers").sortable({
+		connectWith: ['.main_containers'],
+		handle: '.moduleHeader',
+		revert: true,
+		tolerance: 'pointer'
+	});
+
 	// Load module definitions for each tab
 	loadLayout();
 
