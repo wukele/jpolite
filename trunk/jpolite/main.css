@@ -37,7 +37,7 @@ ul.bullet {list-style-type:square; padding-left:20px; margin:5px 0}
 #helper {background:#ffe; margin:12px; margin-bottom:0; padding:5px; border:1px solid #bbb; display:none}
 #main_table {width:100%}
 #main {padding:3px; position:relative}
-.main_containers {float:left}
+.main_containers {float:left;min-height:5em}
 
 /* Footer Attached to Page Bottom */
 #footer {position:fixed; color:#eee; bottom:0; width:100%; height:5em; background:#757495 url(g/header.png) 0 16px; text-align:center}
@@ -58,6 +58,9 @@ ul.bullet {list-style-type:square; padding-left:20px; margin:5px 0}
 	.action_close	{background:url('g/action-close.png')}
 .moduleHeader:hover .moduleActions {display:block}
 .moduleContent {border-top:1px solid #ddd; background:#fff url(g/nav_bg.gif) 0 -5px repeat-x; padding:5px}
+
+/* Drag-drop placeholder */
+.ui-sortable-placeholder { border: 1px dotted red; visibility: visible !important; height: 50px !important; }
 
 /* Light Theme Definitoin for Modules */
 .red .moduleHeader{background:#e24e61 url(g/module-orange.gif) repeat-x; border-color:#F6A7B8;}

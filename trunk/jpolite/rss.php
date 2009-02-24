@@ -18,11 +18,10 @@ echo("<p><a href='" . $channel_link . "'>" . $channel_title . "</a><br/>");
 echo($channel_desc . "</p>");
 
 //get and output "<item>" elements
-$x=$xmlDoc->getElementsByTagName('item');
-for ($i=0; $i<=2; $i++) {
-$item_title=$x->item($i)->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue;
-	$item_link=$x->item($i)->getElementsByTagName('link')->item(0)->childNodes->item(0)->nodeValue;
-	$item_desc=$x->item($i)->getElementsByTagName('description')->item(0)->childNodes->item(0)->nodeValue;
+foreach ($xmlDoc->getElementsByTagName('item') as $x) {
+	$item_title=$x->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue;
+	$item_link=$x->getElementsByTagName('link')->item(0)->childNodes->item(0)->nodeValue;
+	$item_desc=$x->getElementsByTagName('description')->item(0)->childNodes->item(0)->nodeValue;
 	echo ("<p><a href='" . $item_link . "'>" . $item_title . "</a><br/>");
 	echo ($item_desc . "</p>");
 }
