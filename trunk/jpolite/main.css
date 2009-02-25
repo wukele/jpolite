@@ -31,7 +31,8 @@ ul.bullet {list-style-type:square; padding-left:20px; margin:5px 0}
 #header_bar span img {cursor:pointer}
 #header_bar .hint {display:none;padding-right:5px}
 #header_bar:hover .hint {display:inline}
-#expd {display:none}
+#expd {background:url(g/module-expand.png);width:17px;height:16px;display:none}
+#clps {background:url(g/module-collapse.png);width:17px;height:16px}
 
 /* Main Content */
 #helper {background:#ffe; margin:12px; margin-bottom:0; padding:5px; border:1px solid #bbb; display:none}
@@ -60,7 +61,7 @@ ul.bullet {list-style-type:square; padding-left:20px; margin:5px 0}
 .moduleContent {border-top:1px solid #ddd; background:#fff url(g/nav_bg.gif) 0 -5px repeat-x; padding:5px}
 
 /* Drag-drop placeholder */
-.ui-sortable-placeholder { border: 1px dotted red; visibility: visible !important; height: 50px !important; }
+.ui-sortable-placeholder {border: 1px dotted red; background:#faa; visibility: visible !important; height: 20px !important;}
 
 /* Light Theme Definitoin for Modules */
 .red .moduleHeader{background:#e24e61 url(g/module-orange.gif) repeat-x; border-color:#F6A7B8;}

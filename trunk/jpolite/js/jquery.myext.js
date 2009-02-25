@@ -133,6 +133,7 @@ function ReplaceModule() {
 				title:eval("_modules."+i+".t"),
 				url:eval("_modules."+i+".l"),
 				color:eval("_modules."+i+".c")||null});
+	return false;
 };
 
 //RSS Side Menu (Text Link)
@@ -280,10 +281,11 @@ $(function(){
 	//Make all links with rel=new attribute to open in new window
 	$("a[rel=new]").attr("target","_blank");
 
-	t = location.hash;
-	if ((t == '') || ($(t).size() != 1)) t = ":first";
+	t = location.hash.slice(1).match(/[a-zA-Z][\w]*/);
+	t = $("#header_tabs li#"+t);
+	if (t.size() != 1) t = $("#header_tabs li:first");
 
-	setTimeout("$('#header_tabs li"+t+"').click()", 200);
+	setTimeout("t.click()", 20);
 });
 
 // Container Actions, apply on modules
