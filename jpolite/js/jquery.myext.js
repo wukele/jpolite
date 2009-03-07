@@ -350,15 +350,10 @@ jQuery.fn.TabLink = function() {
 // Used on FORM.ajaxform1, replace Form's parent DIV.moduleContent with response from Ajax submit
 jQuery.fn.AjaxForm1 = function() {
 	return this.each(function(){
-		var x = this
-		var result = $(this).parents(".moduleContent")
+		var x = this;
+		var result = $(this).parents(".moduleContent");
 		$("input.submit",this).click(function(){
-			data = {}
-			$("input,textarea", x).each(function(){
-				if (this.name != '') 
-					eval("data." + this.name + "='" + $(this).val() + "'")
-			})
-			$.post(x.action, data, function(data){result.html(data);prepModule.apply(result[0])})
+			$.post(x.action, $(x).serialize(), function(data){result.html(data);prepModule.apply(result[0])});
 			return true;
 		})
 	});
@@ -370,12 +365,7 @@ jQuery.fn.AjaxForm2 = function() {
 		var x = this
 		var result = $(".result",this)
 		$("input.submit",this).click(function(){
-			data = {}
-			$("input,textarea", x).each(function(){
-				if (this.name != '') 
-					eval("data." + this.name + "='" + $(this).val() + "'")
-			})
-			$.post(x.action, data, function(data){result.html(data);prepModule.apply(result[0])})
+			$.post(x.action, $(x).serialize(), function(data){result.html(data);prepModule.apply(result[0])});
 			return true;
 		})
 	});
