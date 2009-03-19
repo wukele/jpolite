@@ -19,6 +19,7 @@ ul.bullet {list-style-type:square; padding-left:20px; margin:5px 0}
 /* Header Portion */
 #header {background:#0e4cbc url(g/header.png) repeat-x}
 #logo {position:absolute; left:20px; top:10px; width:120px; height:50px; background-image:url(g/logo.png)}
+#loading {display:none}
 #title {color:#fff; font-size:1.2em; height:3em; line-height:3em; font-weight:bold; padding-left:160px}
 #header_tabs {font-size:1em; padding-left:160px}
 #header_tabs li {padding:0 1em; float:left; font-weight:bold; height:2em; line-height:2em; color:#eee;
