@@ -35,6 +35,18 @@ jQuery.fn.loadContent = function(url) {
 	});
 };
 
+// Retrieve current layout
+function saveLayout() {
+	var s = "[";
+	$(".module", "#main").each(function(){
+		s += "{i:'" + this.id + "', c:'" + this.parentNode.id + "', t:'" + this.tab +"'},";
+	});
+	s += "]";
+	s = s.replace(",]","]");
+
+	return s;
+};
+
 // Load layout defined in modules.js
 function loadLayout() {
 	// Predefined layout from modules.js is used here, but you can use
@@ -335,17 +347,17 @@ function closeModule() {
 jQuery.fn.LocalLink = function() {
 	return this.click(function() {
 		$(this).parents(".module").loadContent(this.href);
-		return false
+		return false;
 	});
-}
+};
 
 // Used on A.tab to switch to another Tab
 jQuery.fn.TabLink = function() {
 	return this.click(function() {
 		$("#header_tabs li" + "#" + this.id).click();
-		return false
+		return false;
 	});
-}
+};
 
 // Used on FORM.ajaxform1, replace Form's parent DIV.moduleContent with response from Ajax submit
 jQuery.fn.AjaxForm1 = function() {
@@ -355,18 +367,18 @@ jQuery.fn.AjaxForm1 = function() {
 		$("input.submit",this).click(function(){
 			$.post(x.action, $(x).serialize(), function(data){result.html(data);prepModule.apply(result[0])});
 			return true;
-		})
+		});
 	});
 };
 
 // Used on FORM.ajaxform2, replace Form > div.result with response from Ajax submit
 jQuery.fn.AjaxForm2 = function() {
 	return this.each(function(){
-		var x = this
-		var result = $(".result",this)
+		var x = this;
+		var result = $(".result",this);
 		$("input.submit",this).click(function(){
 			$.post(x.action, $(x).serialize(), function(data){result.html(data);prepModule.apply(result[0])});
 			return true;
-		})
+		});
 	});
 };
