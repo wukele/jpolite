@@ -369,9 +369,9 @@ jQuery.fn.AjaxForm1 = function() {
 	return this.each(function(){
 		var x = this;
 		var result = $(this).parents(".moduleContent");
-		$("input.submit",this).click(function(){
+		$(x).submit(function(){
 			$.post(x.action, $(x).serialize(), function(data){result.html(data);prepModule.apply(result[0])});
-			return true;
+			return false;
 		});
 	});
 };
@@ -381,9 +381,9 @@ jQuery.fn.AjaxForm2 = function() {
 	return this.each(function(){
 		var x = this;
 		var result = $(".result",this);
-		$("input.submit",this).click(function(){
+		$(x).submit(function(){
 			$.post(x.action, $(x).serialize(), function(data){result.html(data);prepModule.apply(result[0])});
-			return true;
+			return false;
 		});
 	});
 };
