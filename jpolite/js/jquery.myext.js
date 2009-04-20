@@ -51,19 +51,15 @@ function saveLayout() {
 function loadLayout() {
 	// Predefined layout from modules.js is used here, but you can use
 	// dynamic script to load customized layout instead
-	var list = _layout;
+	var l = _layout;
 
-	layout(eval(list));
-
-	function layout(l) {
-		$.each(l.reverse(), function(i,m) {
-			if (m) {
-				var x = eval("_modules."+m.i);
-				if ($("#"+m.t).size() > 0)
-					$("#"+m.c).addModule({id:m.i, title:x.t, url:x.l, tab:m.t, color:(x.c || null)});
-			}
-		});
-	}
+	$.each(l.reverse(), function(i,m) {
+		if (m) {
+			var x = _modules[m.i];
+			if ($("#"+m.t).size() > 0)
+				$("#"+m.c).addModule({id:m.i, title:x.t, url:x.l, tab:m.t, color:(x.c || null)});
+		}
+	});
 };
 
 // Used on pre-formated <DIV><UL.tabsul><DIVs></DIV> section
@@ -80,7 +76,7 @@ jQuery.fn.Tabs = function() {
 				y = $(this).siblings(".on");
 				y.add(this).toggleClass("on");
 				if ((this.id) && (!this.loaded)) {
-					$(this.target).load(eval("_modules."+this.id+".l"),prepModule);
+					$(this.target).load(_modules[this.id].l,prepModule);
 					this.loaded = true;
 				}
 				$(this.target).add(y.size() > 0 ? y[0].target : null).toggle();
@@ -141,10 +137,11 @@ function ReplaceModule() {
 	i = this.id;
 	x = $(".module:visible",c2);
 	$(".action_close",x).mousedown();
+	m = _modules[i];
 	c2.addModule({id:i,
-				title:eval("_modules."+i+".t"),
-				url:eval("_modules."+i+".l"),
-				color:eval("_modules."+i+".c")||null});
+				title:m.t,
+				url:m.l,
+				color:m.c||null});
 	return false;
 };
 
@@ -234,7 +231,7 @@ function HeaderTabClick(){
 	$(".module:visible").hide();
 
 	ct = this;
-	x = eval("_tabs."+ct.id);
+	x = _tabs[ct.id];
 
 	// Load an extra helper content block if defined
 	// with a file name default to current tab's id
