@@ -2,10 +2,6 @@ var ct = null;		//Current active tab
 var c1, c2, c3;		//The three main containers
 var helper;			//Extra helper atop main containers
 
-Array.prototype.each = function(f) {
-	for (var i=0; i < this.length; i++)
-		f(this[i],i,this);
-};
 Array.prototype.remove = function(m) {
 	for (var i=0; i < this.length; i++)
 		if (this[i] === m) this.splice(i, 1);
@@ -250,7 +246,7 @@ function HeaderTabClick(){
 	c3.css({width:(x.c3 || 0)});
 
 	//Load content and show module
-	this.modules.each(function(m,i){
+	$.each(this.modules, function(i,m){
 		// Lazy loading when the tab is activated
 		if(!m.loaded) $(m).loadContent();
 		$(m).fadeIn();
