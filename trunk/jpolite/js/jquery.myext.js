@@ -26,7 +26,10 @@ jQuery.fn.loadContent = function(url) {
 		u = (url || this.url);
 		if (u == '') return;
 		x = $(".moduleContent", this);
-		x.load(u, prepModule);
+		x.load(u, function(){
+			widgetize.apply(this);
+			//Further processing can be applied here
+		});
 		this.loaded = true;
 	});
 };
@@ -72,7 +75,7 @@ jQuery.fn.Tabs = function() {
 				y = $(this).siblings(".on");
 				y.add(this).toggleClass("on");
 				if ((this.id) && (!this.loaded)) {
-					$(this.target).load(_modules[this.id].l,prepModule);
+					$(this.target).load(_modules[this.id].l,widgetize);
 					this.loaded = true;
 				}
 				$(this.target).add(y.size() > 0 ? y[0].target : null).toggle();
@@ -84,7 +87,7 @@ jQuery.fn.Tabs = function() {
 // Used on pre-formated <DL> section
 // Exclusive accordion, only one on at a time
 jQuery.fn.Accordion = function() {
-	return this.each(function (i) {
+	return this.each(function () {
 		x = $(this);
 
 		x.children("dt").click(function(){
@@ -102,7 +105,7 @@ jQuery.fn.Accordion = function() {
 // Used on pre-formated <DL> section
 // Mutiple accordions, individual on/off control
 jQuery.fn.MAccordion = function() {
-	return this.each(function (i) {
+	return this.each(function () {
 		x = $(this);
 
 		x.addClass("accordion").children("dd").slideDown();
@@ -122,10 +125,6 @@ jQuery.fn.NavIcon = function() {
 	});
 };
 
-jQuery.fn.NavLi = function() {
-	return this.addClass("navli").click(ReplaceModule);
-};
-
 // When a NavLi (or NavIcon) item is clicked, close all modules in column2 (c2)
 // and add a new module designated by the NavLi's ID 
 function ReplaceModule() {
@@ -135,16 +134,32 @@ function ReplaceModule() {
 	$(".action_close",x).mousedown();
 	m = _modules[i];
 	c2.addModule({id:i,
-				title:m.t,
+				title:m.t || this.innerHTML,
 				url:m.l,
 				color:m.c||null});
 	return false;
 };
 
-//RSS Side Menu (Text Link)
-jQuery.fn.RSSLi = function()  {
-	$("a", this).click(LoadRSSModule);
-	return this.addClass("rssli");
+// Widgetize content of a new content block before showing
+function widgetize(){
+	$(".tabs", this).Tabs();
+	$(".accordion", this).Accordion();
+	$(".maccordion", this).MAccordion();
+	$(".navicon > img", this).NavIcon();
+	$(".navul > li", this).addClass('navli');
+	$(".rssul a",this).addClass('rssli');
+	$("a[href^=http], a[rel=new]", this).attr("target", "_blank");
+	$("form.ajaxform1",this).AjaxForm1();
+	$("form.ajaxform2",this).AjaxForm2();
+};
+
+// Some actions are enabled without explicit code
+function LiveEvents() {
+	$(".thickbox").live("click", TB);
+	$("a.local").live("click", LocalLink);
+	$("a.tab").live("click", TabLink);
+	$(".navli").live("click", ReplaceModule);
+	$(".rssli").live("click", LoadRSSModule);
 };
 
 // When a RSSLi item is clicked, close all modules in column2 (c2)
@@ -158,28 +173,9 @@ function LoadRSSModule() {
 	return false;
 };
 
-// Process the content of a newly loaded module before showing
-function prepModule() {
-	$(".tabs",this).Tabs();
-	$(".accordion",this).Accordion();
-	$(".maccordion",this).MAccordion();
-	$(".navicon > img",this).NavIcon();
-	$(".navul > li",this).NavLi();
-	$(".rssul > li",this).RSSLi();
-	$("a.local",this).LocalLink();
-	$("a.tab",this).TabLink();
-	$("form.ajaxform1",this).AjaxForm1();
-	$("form.ajaxform2",this).AjaxForm2();
-	$(".thickbox",this).click(TB);
-	$("a[href^=http]",this).attr("target","_blank");
-	$("a[rel=new]",this).attr("target","_blank");
-
-	$(this).slideDown();
-};
-
 //Used on DIV.main_container only, 'tab' is used only when loading layouts
 //When 'tab' is omitted, ct (current tab) is used instead
-jQuery.fn.addModule = function(settings) { //id, title, url, tab, class
+jQuery.fn.addModule = function(settings) { //id, title, url, tab
 	return this.each(function() {
 		var options = $.extend({
 			title	: null,
@@ -220,7 +216,6 @@ jQuery.fn.addModule = function(settings) { //id, title, url, tab, class
 function HeaderTabClick(){
 	if (this === ct) return;	//Return if click on current active tab
 
-	location.hash = '#' + this.id;
 	$(this).siblings(".on").andSelf().toggleClass("on");
 
 	//Hide last tab's modules
@@ -232,7 +227,7 @@ function HeaderTabClick(){
 	// Load an extra helper content block if defined
 	// with a file name default to current tab's id
 	helper.hide();
-	if (x.helper) helper.load(this.id+".html", prepModule).show();
+	if (x.helper) helper.load(this.id+".html", widgetize).show();
 	else helper.hide().empty();
 
 	//Ajust column widths
@@ -245,6 +240,7 @@ function HeaderTabClick(){
 	}
 	c3.css({width:(x.c3 || 0)});
 
+	location.hash = '#' + this.id;
 	//Load content and show module
 	$.each(this.modules, function(i,m){
 		// Lazy loading when the tab is activated
@@ -263,6 +259,8 @@ $(function(){
 	}).ajaxStop(function(){
 		$(this).hide();
 	});
+
+	LiveEvents();
 
 	$("#header_tabs li").each(function(){
 		// During initialization, attach a "modules" array to each tab
@@ -342,19 +340,15 @@ function closeModule() {
 // ----------------------------------------------------
 
 // Used on A.local to change the content of current module
-jQuery.fn.LocalLink = function() {
-	return this.click(function() {
-		$(this).parents(".module").loadContent(this.href);
-		return false;
-	});
+function LocalLink() {
+	$(this).parents(".module").loadContent(this.href);
+	return false;
 };
 
 // Used on A.tab to switch to another Tab
-jQuery.fn.TabLink = function() {
-	return this.click(function() {
-		$("#header_tabs li" + "#" + this.id).click();
-		return false;
-	});
+function TabLink() {
+	$("#header_tabs li" + "#" + this.id).click();
+	return false;
 };
 
 // Used on FORM.ajaxform1, replace Form's parent DIV.moduleContent with response from Ajax submit
@@ -363,7 +357,7 @@ jQuery.fn.AjaxForm1 = function() {
 		var x = this;
 		var result = $(this).parents(".moduleContent");
 		$(x).submit(function(){
-			$.post(x.action, $(x).serialize(), function(data){result.html(data);prepModule.apply(result[0])});
+			$.post(x.action, $(x).serialize(), function(data){result.html(data);widgetize.apply(result[0])});
 			return false;
 		});
 	});
@@ -375,7 +369,7 @@ jQuery.fn.AjaxForm2 = function() {
 		var x = this;
 		var result = $(".result",this);
 		$(x).submit(function(){
-			$.post(x.action, $(x).serialize(), function(data){result.html(data);prepModule.apply(result[0])});
+			$.post(x.action, $(x).serialize(), function(data){result.html(data);widgetize.apply(result[0])});
 			return false;
 		});
 	});
