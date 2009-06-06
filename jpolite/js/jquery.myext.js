@@ -36,12 +36,9 @@ jQuery.fn.loadContent = function(url) {
 
 // Retrieve current layout
 function saveLayout() {
-	var s = "[";
-	$(".module", "#main").each(function(){
-		s += "{i:'" + this.id + "', c:'" + this.parentNode.id + "', t:'" + this.tab +"'},";
-	});
-	s += "]";
-	s = s.replace(",]","]");
+	return "[" + $(".module", "#main").map(function(){
+		return "{i:'" + this.id + "', c:'" + this.parentNode.id + "', t:'" + this.tab +"'}";
+	}).get().join(",") + "]";
 
 	return s;
 };
@@ -333,7 +330,6 @@ function closeModule() {
 	ct.modules.remove(m[0]);
 	m.rm();
 };
-
 
 // ----------------------------------------------------
 //    Extra Methods for More Dynamic Content Loading
