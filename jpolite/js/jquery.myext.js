@@ -37,7 +37,7 @@ jQuery.fn.loadContent = function(url) {
 // Retrieve current layout
 function saveLayout() {
 	return "[" + $(".module", "#main").map(function(){
-		return "{i:'" + this.id + "', c:'" + this.parentNode.id + "', t:'" + this.tab +"'}";
+		return "{i:'" + this.id + "',c:'" + this.parentNode.id + "',t:'" + this.tab +"'}";
 	}).get().join(",") + "]";
 
 	return s;
@@ -85,17 +85,13 @@ jQuery.fn.Tabs = function() {
 // Exclusive accordion, only one on at a time
 jQuery.fn.Accordion = function() {
 	return this.each(function () {
-		x = $(this);
+		$(this).children("dt").click(function(){
+			x = $(this);
+			if (x.is(".on")) return;
 
-		x.children("dt").click(function(){
-			y = $(this);
-			if (y.is(".on")) return;
-
-			y.siblings("dt.on").andSelf().toggleClass("on");
-			y.siblings("dd:visible").add(y.next()).slideToggle();
-		});
-
-		x.children("dt:first").click();
+			x.siblings(".on").andSelf().toggleClass("on");
+			x.siblings("dd:visible").add(x.next()).slideToggle();
+		}).eq(0).click();
 	});
 };
 
