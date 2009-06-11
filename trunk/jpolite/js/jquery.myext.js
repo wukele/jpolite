@@ -2,17 +2,6 @@ var ct = null;		//Current active tab
 var c1, c2, c3;		//The three main containers
 var helper;			//Extra helper atop main containers
 
-Array.prototype.remove = function(m) {
-	for (var i=0; i < this.length; i++)
-		if (this[i] === m) this.splice(i, 1);
-	return this;
-};
-Array.prototype.test = function(id) {
-	for (var i=0; i < this.length; i++)
-		if (this[i].id == id) return this[i];
-	return false;
-};
-
 // Self-remove
 jQuery.fn.rm = function() {
 	return this.each(function() {
@@ -177,7 +166,7 @@ jQuery.fn.addModule = function(settings) { //id, title, url, tab
 		}, settings);
 
 		var tx = options.tab ? document.getElementById(options.tab) : ct;
-		if (!options.tab && (m = ct.modules.test(options.id))) {
+		if (!options.tab && (m = ct.modules[options.id])) {
 			$(m).fadeTo('fast', 0.5).fadeTo('fast', 1);
 			return; //Disable duplicate in a same tab
 		}
@@ -189,7 +178,7 @@ jQuery.fn.addModule = function(settings) { //id, title, url, tab
 		x.tab = tx.id;
 		x.id = options.id;
 
-		tx.modules.push(x);
+		tx.modules[x.id] = x;
 
 		if (options.title) $(".moduleTitle", x).text(options.title);
 		else $(".moduleHeader",x).rm();
@@ -257,7 +246,7 @@ $(function(){
 
 	$("#header_tabs li").each(function(){
 		// During initialization, attach a "modules" array to each tab
-		this.modules = [];
+		this.modules = {};
 		$(this).click(HeaderTabClick);
 	});
 
@@ -323,7 +312,7 @@ function maxModule() {
 
 function closeModule() {
 	var m = $(this).parents(".module");
-	ct.modules.remove(m[0]);
+	delete ct.modules[m[0].id];
 	m.rm();
 };
 
