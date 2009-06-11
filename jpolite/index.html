@@ -18,6 +18,7 @@
 		<li id="t4">Controls</li>
 		<li id="t5">Extras</li>
 		<li id="t7">RSS Reader</li>
+		<li id="t8">Netvibes UWA</li>
 		<li id="t6">Download</li>
 	</ul>
 	</div>
@@ -68,5 +69,28 @@ Copyright 2009 (C) Trilancer.com
 <script type="text/javascript" src="js/jquery.ui.js"></script>
 <script type="text/javascript" src="js/jquery.myext.js"></script>
 <script type="text/javascript" src="js/thickbox.js"></script>
+<script type="text/javascript" src="http://www.netvibes.com/js/UWA/Utils/IFrameMessaging.js"></script>
+<script type="text/javascript">
+msgHandler = function(message) {
+  var id = message.id;
+  switch (message.action) {
+    case 'resizeHeight':
+      var frame = document.getElementById('frame_' + id);
+      if (frame) {
+        frame.setAttribute('height', message.value);
+      }
+      break;
+   default:
+      console.log(message.action + ': not implemented - ' + message.name + ':' + message.value);
+      break;
+  }
+};
+ 
+UWA.MessageHandler = new UWA.iFrameMessaging;
+UWA.MessageHandler.init({
+    'eventHandler': msgHandler,
+    'trustedOrigin' : 'nvmodules.netvibes.com'
+});
+</script>
 </body>
 </html>

@@ -33,6 +33,10 @@ var _modules={
 	m701:{l:"m701.html",	t:"RSS Reader (m701)"},
 	m702:{l:"rss.php?q=http%3A%2F%2Frss.msnbc.msn.com%2Fid%2F3032091%2Fdevice%2Frss%2Frss.xml",	t:"MSNBC - Static RSS Module (m702)"},
 
+	m801:{l:"m801.html",	t:"CNN.com US"},
+	m802:{l:"m802.html",	t:"Alexa Widget Sample"},
+	m803:{l:"m803.html",	t:"Soduku"},
+
 	m601:{l:"m601.html",	t:"Resources & Credit"},
 	m602:{l:"m602.html",	t:"License"}
 };
@@ -56,6 +60,8 @@ var _layout=[
 
 	{i:'m700',c:'c1',t:'t7'},{i:'m701',c:'c2',t:'t7'},
 							 {i:'m702',c:'c2',t:'t7'},
+							 
+	{i:'m801',c:'c1',t:'t8'},{i:'m802',c:'c2',t:'t8'},{i:'m803',c:'c3',t:'t8'},
 
 	{i:'m601',c:'c1',t:'t6'},
 	{i:'m602',c:'c1',t:'t6'}
@@ -72,5 +78,6 @@ var _tabs={
 	t4:{c1:"270px",c2:"auto",c3:0,helper:true},
 	t5:{c1:"270px",c2:"auto",c3:0,helper:true},
 	t6:{c1:"100%",c2:0,c3:0},
-	t7:{c1:"270px",c2:"auto",c3:0}
+	t7:{c1:"270px",c2:"auto",c3:0},
+	t8:{c1:"33.3%",c2:"33.3%",c3:"33.3%",helper:true}
 };
