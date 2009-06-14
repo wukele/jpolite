@@ -125,10 +125,10 @@ jQuery.fn.NavIcon = function() {
 // and add a new module designated by the NavLi's ID 
 function ReplaceModule() {
 	if (!this.id) return;
-	i = this.id;
-	x = $(".module:visible",c2);
+	var i = this.id;
+	var x = $(".module:visible",c2);
 	$(".action_close",x).mousedown();
-	m = _modules[i];
+	var m = _modules[i];
 	c2.addModule({id:i,
 				title:m.t || this.innerHTML,
 				url:m.l,
@@ -183,7 +183,7 @@ jQuery.fn.addModule = function(settings) { //id, title, url, tab
 
 		if (options.tab) {
 			tx = document.getElementById(options.tab);
-			if (tx.modules[options.id]) return; //Return if module already exists
+			if (tx.modules[options.id]) return;	//Return if module already exists
 		} else tx = ct;
 
 		if (!options.tab && (m = ct.modules[options.id])) {
@@ -191,8 +191,8 @@ jQuery.fn.addModule = function(settings) { //id, title, url, tab
 			return; //Disable duplicate in a same tab
 		}
 
-		y = $("#module_template").clone();
-		x = y[0];
+		var y = $("#module_template").clone();
+		var x = y[0];
 		x.loaded = false;
 		x.url = options.url;
 		x.tab = tx.id;
@@ -205,12 +205,8 @@ jQuery.fn.addModule = function(settings) { //id, title, url, tab
 
 		if (options.color) $(x).addClass(options.color);
 
-		if (tx === ct) $(x).show();
 		$(this).prepend(x);
-
-		if (!options.tab) {
-			$(x).loadContent();
-		}
+		if (tx === ct) $(x).show().loadContent();
 	});
 };
 
