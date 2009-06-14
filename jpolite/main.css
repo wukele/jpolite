@@ -48,12 +48,12 @@ ul.bullet {list-style-type:square; padding-left:20px; margin:5px 0}
 #footer_bar a:hover {color:#333}
 
 /* Module Components */
-.module {background:#fff; border:3px solid #c0c0c0; margin:10px 6px;}
+.module {background:#fff; border:3px solid #c0c0c0; margin:10px 6px;display:none}
 .moduleFrame {border:1px solid #4E8EE2; overflow:hidden;}
 .moduleHeader {height:1.6em; background:#4E8EE2 url(g/module-header.gif) repeat-x; border-left:1px solid #A7D0F6; border-top:1px solid #A7D0F6; color:#fff; cursor:move; overflow:hidden}
 .moduleIcon, .moduleTitle {line-height:1.4em; float:left; padding-left:2px; font-weight:bold}
 .moduleActions {display:none; float:right; height:16px; padding:0 2px}
-.moduleActions img {cursor:pointer;width:16px;height:16px}
+.moduleActions b {cursor:pointer;width:16px;height:16px;float:left}
 	.action_refresh {background:url('g/action-refresh.png')}
 	.action_max		{display:none;background:url('g/action-max.png')}
 	.action_min		{background:url('g/action-min.png')}
