@@ -47,6 +47,20 @@ function loadLayout() {
 	});
 };
 
+function loadStaticModules(){
+	$(".module", "#main").each(function(){
+		var p = this.id.split("#");	//e.g., m101#t1
+		$.extend(this, {
+			id: p[0],
+			tab: p[1],
+			url: _modules[p[0]].l,
+			loaded: true
+		});
+		$("#header_tabs li#" + p[1])[0].modules[p[0]] = this;
+		widgetize.apply(this)
+	})
+}
+
 // Used on pre-formated <DIV><UL.tabsul><DIVs></DIV> section
 jQuery.fn.Tabs = function() {
 	return this.each(function() {
@@ -165,13 +179,19 @@ jQuery.fn.addModule = function(settings) { //id, title, url, tab
 			color	: null
 		}, settings);
 
-		var tx = options.tab ? document.getElementById(options.tab) : ct;
+		var tx;
+
+		if (options.tab) {
+			tx = document.getElementById(options.tab);
+			if (tx.modules[options.id]) return; //Return if module already exists
+		} else tx = ct;
+
 		if (!options.tab && (m = ct.modules[options.id])) {
 			$(m).fadeTo('fast', 0.5).fadeTo('fast', 1);
 			return; //Disable duplicate in a same tab
 		}
 
-		y = $("#module_template").clone(true);
+		y = $("#module_template").clone();
 		x = y[0];
 		x.loaded = false;
 		x.url = options.url;
@@ -202,15 +222,14 @@ function HeaderTabClick(){
 
 	//Hide last tab's modules
 	$(".module:visible").hide();
+	helper.hide();
 
 	ct = this;
-	x = _tabs[ct.id];
+	var x = _tabs[ct.id];
 
 	// Load an extra helper content block if defined
 	// with a file name default to current tab's id
-	helper.hide();
-	if (x.helper) helper.load(this.id+".html", widgetize).show();
-	else helper.hide().empty();
+	if (x.helper) helper.load(x.helper == true ? this.id+".html" : x[helper], widgetize).show();
 
 	//Ajust column widths
 	c1.css({width:x.c1});
@@ -258,14 +277,15 @@ $(function(){
 	});
 
 	// Load module definitions for each tab
+	loadStaticModules();
 	loadLayout();
 
 	$("#expd").click(showAll);
 	$("#clps").click(hideAll);
-	$(".action_refresh").mousedown(loadContent);
-	$(".action_min").mousedown(minModule);
-	$(".action_max").mousedown(maxModule);
-	$(".action_close").mousedown(closeModule);
+	$(".action_refresh").live("mousedown", loadContent);
+	$(".action_min").live("mousedown", minModule);
+	$(".action_max").live("mousedown", maxModule);
+	$(".action_close").live("mousedown", closeModule);
 	//Make all external links open in new window
 	$("a[href^=http]").attr("target","_blank");
 	//Make all links with rel=new attribute to open in new window
