@@ -28,8 +28,6 @@ function saveLayout() {
 	return "[" + $(".module", "#main").map(function(){
 		return "{i:'" + this.id + "',c:'" + this.parentNode.id + "',t:'" + this.tab +"'}";
 	}).get().join(",") + "]";
-
-	return s;
 };
 
 // Load layout defined in modules.js
@@ -47,6 +45,7 @@ function loadLayout() {
 	});
 };
 
+// Activate modules preloaded in index.html
 function loadStaticModules(){
 	$(".module", "#main").each(function(){
 		var p = this.id.split("#");	//e.g., m101#t1
@@ -64,7 +63,7 @@ function loadStaticModules(){
 // Used on pre-formated <DIV><UL.tabsul><DIVs></DIV> section
 jQuery.fn.Tabs = function() {
 	return this.each(function() {
-		x = $(this);
+		var x = $(this);
 		var targets = x.children("div").addClass("tabsdiv").hide();
 
 		x.children(".tabsul").children("li").each(function(i) {
@@ -72,7 +71,7 @@ jQuery.fn.Tabs = function() {
 			$(this).click(function() {
 				if ($(this).is(".on")) return;
 
-				y = $(this).siblings(".on");
+				var y = $(this).siblings(".on");
 				y.add(this).toggleClass("on");
 				if ((this.id) && (!this.loaded)) {
 					$(this.target).load(_modules[this.id].l,widgetize);
@@ -89,7 +88,7 @@ jQuery.fn.Tabs = function() {
 jQuery.fn.Accordion = function() {
 	return this.each(function () {
 		$(this).children("dt").click(function(){
-			x = $(this);
+			var x = $(this);
 			if (x.is(".on")) return;
 
 			x.siblings(".on").andSelf().toggleClass("on");
@@ -102,7 +101,7 @@ jQuery.fn.Accordion = function() {
 // Mutiple accordions, individual on/off control
 jQuery.fn.MAccordion = function() {
 	return this.each(function () {
-		x = $(this);
+		var x = $(this);
 
 		x.addClass("accordion").children("dd").slideDown();
 		x.children("dt").addClass("on").click(function(){
@@ -113,9 +112,9 @@ jQuery.fn.MAccordion = function() {
 
 jQuery.fn.NavIcon = function() {
 	return this.each(function(i){
-		t = $(this).attr("title");
+		var t = $(this).attr("title");
 		$(this).wrap("<div class='navdiv'><a href=# id='" + this.id +"'></a></div>");
-		x = $(this.parentNode);
+		var x = $(this.parentNode);
 		x.append("<br/>"+t);
 		x.click(ReplaceModule);
 	});
@@ -156,6 +155,10 @@ function LiveEvents() {
 	$("a.tab").live("click", TabLink);
 	$(".navli").live("click", ReplaceModule);
 	$(".rssli").live("click", LoadRSSModule);
+	$(".action_refresh").live("mousedown", loadContent);
+	$(".action_min").live("mousedown", minModule);
+	$(".action_max").live("mousedown", maxModule);
+	$(".action_close").live("mousedown", closeModule);
 };
 
 // When a RSSLi item is clicked, close all modules in column2 (c2)
@@ -278,10 +281,6 @@ $(function(){
 
 	$("#expd").click(showAll);
 	$("#clps").click(hideAll);
-	$(".action_refresh").live("mousedown", loadContent);
-	$(".action_min").live("mousedown", minModule);
-	$(".action_max").live("mousedown", maxModule);
-	$(".action_close").live("mousedown", closeModule);
 	//Make all external links open in new window
 	$("a[href^=http]").attr("target","_blank");
 	//Make all links with rel=new attribute to open in new window
